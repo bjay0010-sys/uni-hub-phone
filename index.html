@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Uni Hub</title>
+<meta name="robots" content="noindex,nofollow">
+<meta name="theme-color" content="#0f1320">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Uni Hub">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<style>
+:root{color-scheme:dark;--bg:#0b0f1c;--ink:#eef1fa;--mute:#98a2c3;--line:#27304f;--gold:#e7c46a;--gold2:#f3d98f;--card:#141a30}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;height:100%;background:var(--bg);color:var(--ink);font:16px/1.45 -apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI",system-ui,sans-serif;-webkit-text-size-adjust:100%}
+body{min-height:100vh;min-height:100dvh;display:flex;flex-direction:column;padding:calc(env(safe-area-inset-top) + 28px) 24px calc(env(safe-area-inset-bottom) + 22px);background:radial-gradient(120% 70% at 50% -10%,#1f2a58 0,#0b0f1c 62%)}
+.top{display:flex;align-items:center;justify-content:center;gap:11px;margin-top:6px}
+.top img{width:34px;height:34px;border-radius:9px;box-shadow:0 4px 14px rgba(0,0,0,.45)}
+.top b{font-size:17px;font-weight:650;letter-spacing:.3px}
+main{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;width:100%;max-width:380px;margin:0 auto;text-align:center}
+h1{font-size:26px;line-height:1.15;margin:0 0 6px;font-weight:700;letter-spacing:-.2px}
+p.sub{margin:0 0 26px;color:var(--mute);font-size:15px;max-width:290px}
+.glyph{width:54%;height:54%;display:block}
+.orb{position:relative;width:132px;height:132px;border-radius:50%;margin:0 auto 22px;display:grid;place-items:center;color:var(--gold);background:radial-gradient(circle at 50% 35%,#222d5f 0,#151c3a 70%);border:1px solid #33407a;box-shadow:0 14px 40px rgba(0,0,0,.45),inset 0 1px 0 rgba(255,255,255,.07)}
+.orb::before,.orb::after{content:"";position:absolute;inset:-10px;border-radius:50%;border:1px solid rgba(231,196,106,.28);animation:ring 2.8s ease-out infinite}
+.orb::after{animation-delay:1.4s}
+@keyframes ring{0%{transform:scale(.92);opacity:.9}100%{transform:scale(1.28);opacity:0}}
+button.orb{font:inherit;cursor:pointer;padding:0;appearance:none;-webkit-appearance:none}
+button.orb:active{transform:scale(.96)}
+button.orb:disabled{opacity:.6}
+button.orb:disabled::before,button.orb:disabled::after{animation:none;opacity:0}
+.orb.static::before,.orb.static::after{display:none}
+form,#face,#offer{width:100%;display:none;flex-direction:column;align-items:center}
+form.on,#face.on,#offer.on{display:flex}
+.field{position:relative;width:100%}
+input{width:100%;font:inherit;font-size:18px;padding:16px 56px 16px 18px;border-radius:16px;border:1px solid var(--line);background:var(--card);color:#fff;outline:none;letter-spacing:.4px}
+input:focus{border-color:var(--gold);box-shadow:0 0 0 4px rgba(231,196,106,.16)}
+.eye{position:absolute;right:6px;top:6px;width:44px;height:44px;border:0;background:none;color:var(--mute);font-size:13px;font-weight:600;border-radius:12px}
+.cta{width:100%;margin-top:14px;font:inherit;font-weight:650;font-size:17px;padding:16px;border-radius:16px;border:0;background:linear-gradient(180deg,var(--gold2),var(--gold));color:#1a1608;box-shadow:0 8px 22px rgba(231,196,106,.22);cursor:pointer}
+.cta:active{transform:translateY(1px);filter:brightness(.96)}
+.cta:disabled{opacity:.55}
+.link{margin-top:16px;font:inherit;font-size:15px;font-weight:550;border:0;background:none;color:var(--mute);padding:10px 14px;border-radius:12px;cursor:pointer}
+.link:active{color:#fff}
+.msg{min-height:22px;margin-top:16px;font-size:14px;color:var(--mute);max-width:310px}
+.msg.err{color:#ff9d8d}
+.bar{width:100%;max-width:300px;height:6px;border-radius:6px;background:#1b2342;overflow:hidden;margin:18px auto 4px;display:none}
+.bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--gold),var(--gold2));transition:width .2s}
+.fine{font-size:12px;color:#68739a;text-align:center;max-width:320px;margin:0 auto;padding-top:14px}
+</style></head>
+<body>
+<div class="top"><img src="apple-touch-icon.png" alt=""><b>Uni Hub</b></div>
+<main>
+  <h1 id="ttl">Uni Hub</h1>
+  <p class="sub" id="sub">Your notes, on your phone.</p>
+
+  <div id="face">
+    <button class="orb" id="fb" type="button" aria-label="Unlock with Face ID"><svg class="glyph" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 17v-4.5A6.5 6.5 0 0 1 12.5 6H17M31 6h4.5A6.5 6.5 0 0 1 42 12.5V17M42 31v4.5a6.5 6.5 0 0 1-6.5 6.5H31M17 42h-4.5A6.5 6.5 0 0 1 6 35.5V31"/><path d="M17.5 19.5v4M30.5 19.5v4M24 19v8.5a1.5 1.5 0 0 1-1.5 1.5H21.5"/><path d="M17 33.2c4.2 3.4 9.8 3.4 14 0"/></svg></button>
+    <button class="link" id="fp" type="button">Enter passcode instead</button>
+  </div>
+
+  <form id="f" autocomplete="off">
+    <div class="field"><input id="pw" type="password" placeholder="Passcode" autocomplete="current-password" autocapitalize="off" autocorrect="off" spellcheck="false" enterkeyhint="go"><button class="eye" id="eye" type="button" aria-label="Show passcode">Show</button></div>
+    <button class="cta" id="go" type="submit">Unlock</button>
+    <button class="link" id="pf" type="button" style="display:none">Use Face ID</button>
+  </form>
+
+  <div id="offer">
+    <div class="orb static" aria-hidden="true"><svg class="glyph" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 17v-4.5A6.5 6.5 0 0 1 12.5 6H17M31 6h4.5A6.5 6.5 0 0 1 42 12.5V17M42 31v4.5a6.5 6.5 0 0 1-6.5 6.5H31M17 42h-4.5A6.5 6.5 0 0 1 6 35.5V31"/><path d="M17.5 19.5v4M30.5 19.5v4M24 19v8.5a1.5 1.5 0 0 1-1.5 1.5H21.5"/><path d="M17 33.2c4.2 3.4 9.8 3.4 14 0"/></svg></div>
+    <button class="cta" id="ob" type="button">Turn on Face ID</button>
+    <button class="link" id="on" type="button">Not now</button>
+  </div>
+
+  <div class="bar" id="bar"><i id="bi"></i></div>
+  <div class="msg" id="msg"></div>
+</main>
+<div class="fine">Your passcode is never sent anywhere. Everything on this site is encrypted; only this phone can read it.</div>
+<script src="common.js"></script>
+<script>
+(function(){
+  var $=function(i){return document.getElementById(i)}, BASE=new URL('./',location.href).pathname, hasFace=false, trying=false;
+  function say(t,err){var m=$('msg');m.textContent=t||'';m.className='msg'+(err?' err':'');}
+  function prog(d,t){ $('bar').style.display=t?'block':'none'; $('bi').style.width=(t?Math.round(100*d/t):0)+'%'; }
+  function head(t,sub){ $('ttl').textContent=t; $('sub').textContent=sub||''; }
+  navigator.serviceWorker && navigator.serviceWorker.addEventListener('message',function(e){ if(e.data&&e.data.t==='progress'){ prog(e.data.done,e.data.total); say('Saving to this phone\u2026 '+e.data.done+' / '+e.data.total); } });
+  var R=(new URLSearchParams(location.search).get('r')||'');
+  if(!/^[^:\/\\][^:]*$/.test(R)) R='';
+  function go(){ location.replace(BASE+'v/'+R); }
+  function view(name){ ['face','f','offer'].forEach(function(id){ $(id).classList.toggle('on',id===name); }); prog(0,0); }
+  /* passcode screen */
+  function lock(msg){ view('f'); head('Enter passcode','Unlock to open your notes.'); $('pf').style.display=hasFace?'':'none'; say(msg||'',!!msg); setTimeout(function(){$('pw').focus()},60); }
+  /* Face ID screen */
+  function faceScreen(msg,auto){ view('face'); head('Uni Hub is locked','Use Face ID to open your notes.'); say(msg||'',!!msg); if(auto) setTimeout(function(){ faceNow(true); },350); }
+  async function faceNow(silent){
+    if(trying) return; trying=true; $('fb').disabled=true; say('');
+    try{ await UH.faceUnlock(); say('Unlocked'); go(); }
+    catch(e){
+      trying=false; $('fb').disabled=false; var n=e&&e.name;
+      if(silent && n==='NotAllowedError'){ say('Tap the icon to unlock with Face ID.'); return; }
+      say(n==='NotAllowedError'?'Face ID was cancelled or did not match. Try again, or use your passcode.':((e&&e.message)||'Face ID failed. Use your passcode.'),true);
+    }
+  }
+  $('fb').addEventListener('click',function(){ faceNow(false); });
+  $('fp').addEventListener('click',function(){ lock(); });
+  $('pf').addEventListener('click',function(){ faceScreen(); });
+  $('eye').addEventListener('click',function(){ var p=$('pw'), sh=p.type==='password'; p.type=sh?'text':'password'; $('eye').textContent=sh?'Hide':'Show'; p.focus(); });
+  /* one-time offer after the first passcode unlock */
+  async function offerFace(){
+    if(!(await UH.faceAvailable())) return go();
+    view('offer'); head('Unlock with Face ID','Open Uni Hub with a glance. You can switch this off any time from the menu.'); say('');
+    $('on').onclick=async function(){ try{ await UH.set('facedecl',1); }catch(e){} go(); };
+    $('ob').onclick=async function(){
+      $('ob').disabled=true; say('');
+      try{ var m=await UH.faceEnroll(); say(m==='prf'?'Face ID is on.':'Face ID is on (screen lock only on this phone).'); setTimeout(go,900); }
+      catch(e){ $('ob').disabled=false; say((e&&e.name==='NotAllowedError')?'Face ID was cancelled.':'Could not turn on Face ID: '+((e&&e.message)||e),true); }
+    };
+  }
+  async function start(){
+    if(!('serviceWorker' in navigator) || !window.crypto || !crypto.subtle){ head('Cannot start','This needs a secure https connection.'); view(''); return; }
+    var reg; try{ reg=await navigator.serviceWorker.register('sw.js'); await navigator.serviceWorker.ready; }catch(e){ say('Could not start: '+e.message,true); return; }
+    /* make sure the current version of the background worker is the one answering (an older copy may still be active) */
+    for(var i=0;i<25;i++){ var v=await UH.ask({t:'status'}); if(v&&v.ver==='7') break; try{ await reg.update(); }catch(e){} await new Promise(function(r){setTimeout(r,600)}); if(i===24){ say('The app is still updating. Close this page completely and open it again.',true); } }
+    try{ navigator.storage && navigator.storage.persist && navigator.storage.persist(); }catch(e){}
+    var st=await UH.ask({t:'status'}); hasFace=!!st.face;
+    if(st.unlocked && st.meta){ head('Opening\u2026',''); return go(); }
+    if(st.unlocked){ head('Getting your notes\u2026',''); return finish(); }
+    if(st.face && st.meta) return faceScreen('',true);   /* shown whenever Face ID is set up, even if the browser does not report support */
+    lock();
+  }
+  async function finish(){
+    head('Setting up\u2026','Saving your notes to this phone so they work offline.'); view(''); say('');
+    var hm=await UH.get('mf'); var r=await UH.ask({t:'sync',force:!hm});
+    if(r.ok){ var st2=await UH.ask({t:'status'}); var skip=await UH.get('facedecl'); if(!st2.face && !skip) return offerFace(); return go(); }
+    if(r.err==='offline'){ say('No connection. Try again when you are online.',true); }
+    else if(r.err==='passcode-changed'){ hasFace=false; lock('The passcode was changed on the PC. Enter the new one.'); }
+    else say('Sync did not finish ('+r.err+(r.dbg?' '+r.dbg:'')+(r.failed?' '+r.failed+' files':'')+'). Reload the page to retry.',true);
+  }
+  $('f').addEventListener('submit',async function(ev){
+    ev.preventDefault(); var pw=$('pw').value; if(!pw) return;
+    $('go').disabled=true; say('Checking\u2026');
+    try{
+      var mr; try{ mr=await fetch(BASE+'data/meta.json',{cache:'no-store'}); if(!mr.ok) throw 0; }catch(e){ say('Cannot reach the site. Check your connection.',true); $('go').disabled=false; return; }
+      var meta=await mr.json();
+      var raw=await UH.deriveRaw(pw,meta.salt,meta.iter); var key=await UH.importRaw(raw);
+      var br=await fetch(BASE+'data/'+meta.mf); var buf=await br.arrayBuffer();
+      try{ await UH.decrypt(key,buf); }catch(e){ say('Wrong passcode.',true); $('go').disabled=false; $('pw').select(); return; }
+      await UH.setKey(raw); $('pw').value='';
+      await finish();
+    }catch(e){ say('Something went wrong: '+(e&&e.message||e),true); }
+    $('go').disabled=false;
+  });
+  start();
+})();
+</script>
+</body></html>
